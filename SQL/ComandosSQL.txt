@@ -1,0 +1,131 @@
+#Creación de Base de datos
+create database "nombre_baseDatos";
+
+comando para ingresar:
+mysql -u francisco -p
+
+
+SHOW VARIABLES LIKE 'validate_password%';
+
+*Crear usuario
+CREATE USER 'francisco'@'localhost' IDENTIFIED BY 'Admin1234'; 
+
+GRANT ALL PRIVILEGES ON *.* TO 'francisco'@'localhost' WITH GRANT OPTION;
+
+CREATE USER 'francisco'@'%' IDENTIFIED BY 'Admin1234';
+
+GRANT ALL PRIVILEGES ON *.* TO 'francisco'@'%' WITH GRANT OPTION;
+
+*Mostrar bases de usuario
+show databases; ---> permite visualizar desde la terminal las bases de datos creadas
+
+*usar base de datos creada
+use ejemplo;
+
+*mostrar las tablas creadas en la base de datos seleccionada
+show tables;
+
+* Crear nuestra tabla
+CREATE TABLA nombre_tabla(
+	nombre_columna tipo_dato restriccion,
+	nombre_columna tipo_dato restriccion,
+	...
+	PRIMARY KEY ("nombre_columna1")
+	
+)
+
+
+CREATE table clientes(
+	id int PRIMARY KEY not null auto_increment,
+	nombre varchar(30) not null,
+	correo varchar(50)
+	
+);
+
+--- AUTOINCREMENT : SI NO AGREGAMOS LA PK EN LA INSERCION, CREA UNA SEGUN LA SECUENCIA.
+
+*comando de la estructura en la base de datos
+describe clientes;
+
+*consultar la data en la tabla
+select * from nombre_tabla; ---> El "*" selecciona TODOS los registros
+
+*Insercion de registros
+insert into nombre_tabla (columna 1, columna 2, ...)values (valor1, valor2, ...);
+
+insert into clientes (id, nombre, correo) values (1, 'Zoe', 'a@a.com');
+
+-----VACIAR LA TABLA ---> ATEEEENTO!!
+truncate table clientes;
+
+-----ELIMINAR LA TABLA --> ATEEEENTOOO!!!
+drop table clientes;
+
+-----ELIMINA LA BASE DE DATOSSS!!!!!!!
+drop database ejemplo;
+
+---- ACTUALIZAR REGISTRO EN TABLA
+UPDATE clientes 
+SET correo = 'h@h.com'
+WHERE id 3 
+-----update sin where 
+
+---- FILTRAR
+mysql> select * from clientes where id ="id";
+
+------ WHERE Y LIKE
+SELECT * FROM Customers
+-- WHERE CustomerName LIKE '%com%'; ----> el "LIKE" permite buscar coincidencia un tanto imprecisas
+-- '%...%' ---> Esto permite buscar una palabra que esta en medio de algo
+-- WHERE CustomerName LIKE 'fran%';
+-- '...%' ---> Busca coincidencia con el principio de una palabra
+WHERE CustomerName LIKE '%tion'
+-- '%...'  ---> Busca coincidencia con el final de una palabra
+and ContactName Like '%von'
+;
+
+
+---- Oreden ascendente
+SELECT * FROM Products
+where price Between 10 and 30
+Order by price asc;
+;
+
+---- Oreden descendente
+SELECT * FROM Products
+where price Between 10 and 30
+Order by price desc;
+;
+
+****************************************
+
+CREATE TABLE direcciones(
+	id int primary key not null auto_increment,
+	nombre varchar(100) not null,
+	numero int not null
+);
+
+-- MODIFICAR TABLA
+ALTER TABLE clientes add direccionesId int not null;
+ADD nombre_columna tipo restriccion;
+
+--- RELACIONAR TABLAS
+ALTER TABLE clientes
+ADD FOREIGN KEY (nombre_columnaKF) REFERENCES otraTabla(nombrePK);
+
+
+
+ALTER TABLE clientes
+ADD CONSTRAINT FK_direccionesId
+FOREIGN KEY (direcciones) REFERENCES direcciones(id);
+
+ALTER TABLE clientes ADD FOREIGN KEY (direccionesId) REFERENCES direcciones(id);
+
+ALTER TABLE alumnos
+add FOREIGN KEY (direccion_id) references direccion(id);
+
+
+	
+
+
+
